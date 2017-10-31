@@ -22,8 +22,8 @@ public class Main {
 
     public static void main(String[] args) {
         String x = "1";
-        while (x.equals("1") || x.equals("2") || x.equals("3") || x.equals("4")) {
-            System.out.println("1 - добавить новое слово\n2 - прочитать словарь\n3 - сделать бэкап базы\n4 - выход");
+        while (x.equals("1") || x.equals("2") || x.equals("3") || x.equals("4") || x.equals("5")) {
+            System.out.println("1 - добавить новое слово\n2 - прочитать словарь\n3 - сделать бэкап базы\n4 - поиск слова\n5 - выход");
             x = sn.nextLine();
             switch (x) {
                 case "1":
@@ -42,6 +42,10 @@ public class Main {
                     writeFile(read().toString());
                     break;
                 case "4":
+                    System.out.println("Введите слово которое необходимо найти:");
+                    searchWord(sn.nextLine());
+                    break;
+                case "5":
                     System.exit(0);
                     break;
             }
@@ -67,11 +71,10 @@ public class Main {
             stmt = (Statement) con.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
-                int id = rs.getInt(1);
                 String word = rs.getString(2);
                 String translate = rs.getString(3);
                 String comments = rs.getString(4);
-                stringBuilder.append("id: ").append(id).append("; word -> ").append(word).append("; translate -> ").append(translate).append("; comments -> ").append(comments).append("\n");
+                stringBuilder.append(word).append(";").append(translate).append(";").append(comments).append("\n");
             }
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
@@ -86,6 +89,15 @@ public class Main {
             fileOutputStream.write(x);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private static void searchWord(String s) {
+        String[] s1 = read().toString().split("\n");
+        for (String s2 : s1) {
+            if (s2.contains(s)) {
+                System.out.println(s2);
+            }
         }
     }
 }
