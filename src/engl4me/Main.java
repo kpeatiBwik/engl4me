@@ -3,6 +3,8 @@ package engl4me;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,7 +12,7 @@ import java.util.Scanner;
 
 public class Main {
 
-    private static final String url = "jdbc:mysql://localhost:3306/engl4me";
+    private static final String url = "jdbc:mysql://localhost:3306/engl4me?useUnicode=true&characterEncoding=utf8";
     private static final String user = "root";
     private static final String password = "";
 
@@ -20,8 +22,8 @@ public class Main {
 
     public static void main(String[] args) {
         String x = "1";
-        while (x.equals("1") || x.equals("2")) {
-            System.out.println("1 - добавить новое слово, 2 - прочитать словарь");
+        while (x.equals("1") || x.equals("2") || x.equals("3") || x.equals("4")) {
+            System.out.println("1 - добавить новое слово\n2 - прочитать словарь\n3 - сделать бэкап базы\n4 - выход");
             x = sn.nextLine();
             switch (x) {
                 case "1":
@@ -34,7 +36,13 @@ public class Main {
                     write(word, translate, comments);
                     break;
                 case "2":
-                    read();
+                    System.out.println(read());
+                    break;
+                case "3":
+                    writeFile(read().toString());
+                    break;
+                case "4":
+                    System.exit(0);
                     break;
             }
         }
@@ -51,8 +59,9 @@ public class Main {
         }
     }
 
-    private static void read() {
+    private static StringBuilder read() {
         String query = "select * from dictionary";
+        StringBuilder stringBuilder = new StringBuilder();
         try {
             con = (Connection) DriverManager.getConnection(url, user, password);
             stmt = (Statement) con.createStatement();
@@ -62,10 +71,21 @@ public class Main {
                 String word = rs.getString(2);
                 String translate = rs.getString(3);
                 String comments = rs.getString(4);
-                System.out.println("id: " + id + "; word -> " + word + "; translate -> " + translate + "; comments -> " + comments);
+                stringBuilder.append("id: ").append(id).append("; word -> ").append(word).append("; translate -> ").append(translate).append("; comments -> ").append(comments).append("\n");
             }
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
+        }
+        return stringBuilder;
+    }
+
+    private static void writeFile(String s) {
+        try {
+            byte x[] = s.getBytes();
+            FileOutputStream fileOutputStream = new FileOutputStream("dbbackup.csv");
+            fileOutputStream.write(x);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
