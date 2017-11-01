@@ -71,6 +71,7 @@ public class Main {
             stmt = (Statement) con.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
+                String id = rs.getString(1);
                 String word = rs.getString(2);
                 String translate = rs.getString(3);
                 String comments = rs.getString(4);
