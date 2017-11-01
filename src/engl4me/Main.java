@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -64,6 +66,7 @@ public class Main {
     }
 
     private static StringBuilder read() {
+        List<Word> words = new ArrayList<>();
         String query = "select * from dictionary";
         StringBuilder stringBuilder = new StringBuilder();
         try {
@@ -75,6 +78,7 @@ public class Main {
                 String word = rs.getString(2);
                 String translate = rs.getString(3);
                 String comments = rs.getString(4);
+                words.add(new Word(rs.getString(2),rs.getString(3),rs.getString(4)));
                 stringBuilder.append(word).append(";").append(translate).append(";").append(comments).append("\n");
             }
         } catch (SQLException sqlEx) {
