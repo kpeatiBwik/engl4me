@@ -13,7 +13,7 @@ import java.util.List;
 
 public class Dictionary implements Search, SupportActions {
 
-    private List wordList = read();
+    private List wordList;
 
     private final String url = "jdbc:mysql://localhost:3306/engl4me?useUnicode=true&characterEncoding=utf8";
     private final String user = "root";
@@ -23,14 +23,13 @@ public class Dictionary implements Search, SupportActions {
     private Statement stmt;
 
     public List getWordList() {
-        return wordList;
+        return wordList = read();
     }
 
     private void setWordList(List wordList) {
         this.wordList = wordList;
     }
 
-    @Override
     public void write(Word word) {
         String query = ("insert into dictionary(word, translate, comments) values('" + word.getWord() + "', '" + word.getTranslate() + "', '" + word.getComments() + "')");
         try {
@@ -42,8 +41,7 @@ public class Dictionary implements Search, SupportActions {
         }
     }
 
-    @Override
-    public List<Word> read() {
+    private List<Word> read() {
         List<Word> words = new ArrayList<>();
         String query = "select * from dictionary";
         try {
@@ -61,7 +59,7 @@ public class Dictionary implements Search, SupportActions {
     }
 
     @Override
-    public void writeFile(String s) {
+    public void writeToFile(String s) {
         try {
             byte x[] = s.getBytes();
             FileOutputStream fileOutputStream = new FileOutputStream("dbbackup.csv");
@@ -73,12 +71,12 @@ public class Dictionary implements Search, SupportActions {
 
     @Override
     public void searchByWord(String s) {
-//        String[] s1 = read().toString().split(",");
-//        for (String s2 : s1) {
-//            if (s2.contains(s.toUpperCase())) {
-//                System.out.println(s2);
-//            }
-//        }
+        String[] s1 = read().toString().split(",");
+        for (String s2 : s1) {
+            if (s2.contains(s.toUpperCase())) {
+                System.out.println(s2);
+            }
+        }
     }
 
     @Override

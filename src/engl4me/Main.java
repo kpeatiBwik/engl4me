@@ -26,7 +26,7 @@ public class Main {
                     System.out.println(dictionary.getWordList().toString());
                     break;
                 case "3":
-                    dictionary.writeFile(dictionary.getWordList().toString());
+                    dictionary.writeToFile(dictionary.getWordList().toString());
                     break;
                 case "4":
                     System.out.println("Введите слово которое необходимо найти:");
