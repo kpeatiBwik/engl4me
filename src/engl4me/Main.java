@@ -1,25 +1,11 @@
 package engl4me;
 
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.Statement;
-
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
 
-    private static final String url = "jdbc:mysql://localhost:3306/engl4me?useUnicode=true&characterEncoding=utf8";
-    private static final String user = "root";
-    private static final String password = "";
-
-    private static Connection con;
-    private static Statement stmt;
+    private static SupportActions supportActions = new SupportActions();
+    private static Dictionary dictionary = new Dictionary();
     private static Scanner sn = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -35,73 +21,21 @@ public class Main {
                     String translate = sn.nextLine();
                     System.out.println("Введите комментарий:");
                     String comments = sn.nextLine();
-                    write(word, translate, comments);
+                    supportActions.write(new Word(word.toUpperCase(), translate.toUpperCase(), comments.toUpperCase()));
                     break;
                 case "2":
-                    System.out.println(read());
+                    System.out.println(supportActions.read().toString());
                     break;
                 case "3":
-                    writeFile(read().toString());
+                    supportActions.writeFile(supportActions.read().toString());
                     break;
                 case "4":
                     System.out.println("Введите слово которое необходимо найти:");
-                    searchWord(sn.nextLine());
+                    dictionary.searchByWord(sn.nextLine());
                     break;
                 case "5":
                     System.exit(0);
                     break;
-            }
-        }
-    }
-
-    private static void write(String word, String translate, String comments) {
-        String query = ("insert into dictionary(word, translate, comments) values('" + word + "', '" + translate + "', '" + comments + "')");
-        try {
-            con = (Connection) DriverManager.getConnection(url, user, password);
-            stmt = (Statement) con.createStatement();
-            stmt.executeUpdate(query);
-        } catch (SQLException sqlEx) {
-            sqlEx.printStackTrace();
-        }
-    }
-
-    private static StringBuilder read() {
-        List<Word> words = new ArrayList<>();
-        String query = "select * from dictionary";
-        StringBuilder stringBuilder = new StringBuilder();
-        try {
-            con = (Connection) DriverManager.getConnection(url, user, password);
-            stmt = (Statement) con.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-            while (rs.next()) {
-                String id = rs.getString(1);
-                String word = rs.getString(2);
-                String translate = rs.getString(3);
-                String comments = rs.getString(4);
-                words.add(new Word(rs.getString(2),rs.getString(3),rs.getString(4)));
-                stringBuilder.append(word).append(";").append(translate).append(";").append(comments).append("\n");
-            }
-        } catch (SQLException sqlEx) {
-            sqlEx.printStackTrace();
-        }
-        return stringBuilder;
-    }
-
-    private static void writeFile(String s) {
-        try {
-            byte x[] = s.getBytes();
-            FileOutputStream fileOutputStream = new FileOutputStream("dbbackup.csv");
-            fileOutputStream.write(x);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static void searchWord(String s) {
-        String[] s1 = read().toString().split("\n");
-        for (String s2 : s1) {
-            if (s2.contains(s)) {
-                System.out.println(s2);
             }
         }
     }

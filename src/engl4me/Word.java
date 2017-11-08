@@ -37,6 +37,6 @@ public class Word {
 
     @Override
     public String toString() {
-        return getWord() + " " + getTranslate() + " " + getComments();
+        return getWord() + " -> " + getTranslate() + " -> " + getComments();
     }
 }
