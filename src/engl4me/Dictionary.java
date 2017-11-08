@@ -13,7 +13,7 @@ import java.util.List;
 
 public class Dictionary implements Search, SupportActions {
 
-    List<Word> wordList;
+    private List wordList = read();
 
     private final String url = "jdbc:mysql://localhost:3306/engl4me?useUnicode=true&characterEncoding=utf8";
     private final String user = "root";
@@ -21,6 +21,14 @@ public class Dictionary implements Search, SupportActions {
 
     private Connection con;
     private Statement stmt;
+
+    public List getWordList() {
+        return wordList;
+    }
+
+    private void setWordList(List wordList) {
+        this.wordList = wordList;
+    }
 
     @Override
     public void write(Word word) {
@@ -35,7 +43,7 @@ public class Dictionary implements Search, SupportActions {
     }
 
     @Override
-    public List read() {
+    public List<Word> read() {
         List<Word> words = new ArrayList<>();
         String query = "select * from dictionary";
         try {
@@ -48,6 +56,7 @@ public class Dictionary implements Search, SupportActions {
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
         }
+        setWordList(words);
         return words;
     }
 
@@ -64,12 +73,12 @@ public class Dictionary implements Search, SupportActions {
 
     @Override
     public void searchByWord(String s) {
-        String[] s1 = read().toString().split(",");
-        for (String s2 : s1) {
-            if (s2.contains(s.toUpperCase())) {
-                System.out.println(s2);
-            }
-        }
+//        String[] s1 = read().toString().split(",");
+//        for (String s2 : s1) {
+//            if (s2.contains(s.toUpperCase())) {
+//                System.out.println(s2);
+//            }
+//        }
     }
 
     @Override

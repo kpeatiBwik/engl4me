@@ -5,7 +5,7 @@ import java.util.List;
 public interface SupportActions {
     void write(Word word);
 
-    List read();
+    List<Word> read();
 
     void writeFile(String s);
 }

@@ -23,10 +23,10 @@ public class Main {
                     dictionary.write(new Word(word.toUpperCase(), translate.toUpperCase(), comments.toUpperCase()));
                     break;
                 case "2":
-                    System.out.println(dictionary.read().toString());
+                    System.out.println(dictionary.getWordList().toString());
                     break;
                 case "3":
-                    dictionary.writeFile(dictionary.read().toString());
+                    dictionary.writeFile(dictionary.getWordList().toString());
                     break;
                 case "4":
                     System.out.println("Введите слово которое необходимо найти:");
