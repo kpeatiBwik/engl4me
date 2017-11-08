@@ -1,14 +1,20 @@
 package engl4me;
 
-public class Dictionary implements Search{
+import java.util.List;
+
+public class Dictionary implements Search {
+
+    List<Word> wordList;
+
+    private static SupportActions supportActions = new SupportActions();
     @Override
     public void searchByWord(String s) {
-            String[] s1 = supportActions.read().toString().split(",");
-            for (String s2 : s1) {
-                if (s2.contains(s.toUpperCase())) {
-                    System.out.println(s2);
-                }
+        String[] s1 = supportActions.read().toString().split(",");
+        for (String s2 : s1) {
+            if (s2.contains(s.toUpperCase())) {
+                System.out.println(s2);
             }
+        }
     }
 
     @Override

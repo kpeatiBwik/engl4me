@@ -39,4 +39,5 @@ public class Word {
     public String toString() {
         return getWord() + " -> " + getTranslate() + " -> " + getComments();
     }
+
 }
