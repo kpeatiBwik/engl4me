@@ -3,15 +3,13 @@ package engl4me;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Dictionary implements Search, SupportActions {
+public class Dictionary extends Helper{
 
     private List wordList;
 
@@ -58,34 +56,12 @@ public class Dictionary implements Search, SupportActions {
         return words;
     }
 
-    @Override
-    public void writeToFile(String s) {
-        try {
-            byte x[] = s.getBytes();
-            FileOutputStream fileOutputStream = new FileOutputStream("dbbackup.csv");
-            fileOutputStream.write(x);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void searchByWord(String s) {
+    void searchByWord(String s) {
         String[] s1 = read().toString().split(",");
         for (String s2 : s1) {
             if (s2.contains(s.toUpperCase())) {
                 System.out.println(s2);
             }
         }
-    }
-
-    @Override
-    public String searchByTranslate(String s) {
-        return null;
-    }
-
-    @Override
-    public String searchCommentByWord(String s) {
-        return null;
     }
 }
