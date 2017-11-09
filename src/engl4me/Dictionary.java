@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Dictionary extends Helper{
+public class Dictionary {
 
     private List wordList;
 
@@ -28,7 +28,7 @@ public class Dictionary extends Helper{
         this.wordList = wordList;
     }
 
-    public void write(Word word) {
+    public void writeWordToDictionary(Word word) {
         String query = ("insert into dictionary(word, translate, comments) values('" + word.getWord() + "', '" + word.getTranslate() + "', '" + word.getComments() + "')");
         try {
             con = (Connection) DriverManager.getConnection(url, user, password);
@@ -37,6 +37,38 @@ public class Dictionary extends Helper{
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
         }
+    }
+
+    public int getId(String s) {
+        String query = ("SELECT * FROM dictionary WHERE word='" + s.toUpperCase() + "'");
+        int id = 0;
+        try {
+            con = (Connection) DriverManager.getConnection(url, user, password);
+            stmt = (Statement) con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()){
+                id = rs.getInt(1);
+            }
+        } catch (SQLException sqlEx) {
+            sqlEx.printStackTrace();
+        }
+        finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return id;
+    }
+
+    //TODO переписать. это чушь
+    public void updateWord(String word, String translate, String comment) {
+
+    }
+
+    public void writeDictionaryToFile(String s){
+        new Helper().writeToFile(s);
     }
 
     private List<Word> read() {
@@ -51,6 +83,13 @@ public class Dictionary extends Helper{
             }
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
+        }
+        finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         setWordList(words);
         return words;

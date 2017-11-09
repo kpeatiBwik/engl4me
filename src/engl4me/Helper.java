@@ -3,7 +3,7 @@ package engl4me;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public abstract class Helper {
+public class Helper {
     void writeToFile(String s) {
         try {
             byte x[] = s.getBytes();

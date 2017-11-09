@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Main {
 
-        private static Dictionary dictionary = new Dictionary();
+    private static Dictionary dictionary = new Dictionary();
     private static Scanner sn = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -20,13 +20,13 @@ public class Main {
                     String translate = sn.nextLine();
                     System.out.println("Введите комментарий:");
                     String comments = sn.nextLine();
-                    dictionary.write(new Word(word.toUpperCase(), translate.toUpperCase(), comments.toUpperCase()));
+                    dictionary.writeWordToDictionary(new Word(word.toUpperCase(), translate.toUpperCase(), comments.toUpperCase()));
                     break;
                 case "2":
                     System.out.println(dictionary.getWordList().toString());
                     break;
                 case "3":
-                    dictionary.writeToFile(dictionary.getWordList().toString());
+                    dictionary.writeDictionaryToFile(dictionary.getWordList().toString());
                     break;
                 case "4":
                     System.out.println("Введите слово которое необходимо найти:");
