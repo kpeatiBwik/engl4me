@@ -62,11 +62,6 @@ public class Dictionary {
         return id;
     }
 
-    //TODO переписать. это чушь
-    public void updateWord(String word, String translate, String comment) {
-
-    }
-
     public void writeDictionaryToFile(String s){
         new Helper().writeToFile(s);
     }

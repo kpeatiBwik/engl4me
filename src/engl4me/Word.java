@@ -1,6 +1,7 @@
 package engl4me;
 
 public class Word {
+    private int id;
     private String word;
     private String translate;
     private String comments;
@@ -33,6 +34,10 @@ public class Word {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    public void updateWord(String word, String translate, String comment) {
+
     }
 
     @Override
