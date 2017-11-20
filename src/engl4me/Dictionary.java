@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Dictionary {
+class Dictionary {
 
     private List wordList;
 
@@ -20,7 +20,7 @@ public class Dictionary {
     private Connection con;
     private Statement stmt;
 
-    public List getWordList() {
+    List getWordList() {
         return wordList = read();
     }
 
@@ -28,7 +28,7 @@ public class Dictionary {
         this.wordList = wordList;
     }
 
-    public void writeWordToDictionary(Word word) {
+    void writeWordToDictionary(Word word) {
         String query = ("insert into dictionary(word, translate, comments) values('" + word.getWord() + "', '" + word.getTranslate() + "', '" + word.getComments() + "')");
         try {
             con = (Connection) DriverManager.getConnection(url, user, password);
@@ -39,7 +39,7 @@ public class Dictionary {
         }
     }
 
-    public int getId(String s) {
+    int getId(String s) {
         String query = ("SELECT * FROM dictionary WHERE word='" + s.toUpperCase() + "'");
         int id = 0;
         try {
@@ -62,7 +62,7 @@ public class Dictionary {
         return id;
     }
 
-    public void writeDictionaryToFile(String s){
+    void writeDictionaryToFile(String s){
         new Helper().writeToFile(s);
     }
 

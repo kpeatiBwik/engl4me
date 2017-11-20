@@ -12,27 +12,27 @@ public class Word {
         setComments(comments);
     }
 
-    public String getWord() {
+    String getWord() {
         return word;
     }
 
-    public void setWord(String word) {
+    private void setWord(String word) {
         this.word = word;
     }
 
-    public String getTranslate() {
+    String getTranslate() {
         return translate;
     }
 
-    public void setTranslate(String translate) {
+    private void setTranslate(String translate) {
         this.translate = translate;
     }
 
-    public String getComments() {
+    String getComments() {
         return comments;
     }
 
-    public void setComments(String comments) {
+    private void setComments(String comments) {
         this.comments = comments;
     }
 
