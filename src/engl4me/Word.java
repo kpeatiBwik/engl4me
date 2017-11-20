@@ -7,9 +7,9 @@ public class Word {
     private String comments;
 
     public Word(String word, String translate, String comments) {
-        this.word = word;
-        this.translate = translate;
-        this.comments = comments;
+        setWord(word);
+        setTranslate(translate);
+        setComments(comments);
     }
 
     public String getWord() {
