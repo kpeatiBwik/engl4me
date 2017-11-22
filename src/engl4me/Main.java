@@ -1,5 +1,7 @@
 package engl4me;
 
+import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
+
 import java.util.Scanner;
 
 public class Main {
@@ -7,7 +9,7 @@ public class Main {
     private static Dictionary dictionary = new Dictionary();
     private static Scanner sn = new Scanner(System.in);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws CommunicationsException {
         String x = "1";
         while (x.equals("1") || x.equals("2") || x.equals("3") || x.equals("4") || x.equals("5")) {
             System.out.println("1 - добавить новое слово\n2 - прочитать словарь\n3 - сделать бэкап базы\n4 - поиск слова\n5 - выход");

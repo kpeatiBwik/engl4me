@@ -2,6 +2,7 @@ package engl4me;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
+import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
 
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -20,7 +21,7 @@ class Dictionary {
     private Connection con;
     private Statement stmt;
 
-    List getWordList() {
+    List getWordList() throws CommunicationsException {
         return wordList = read();
     }
 
@@ -46,13 +47,12 @@ class Dictionary {
             con = (Connection) DriverManager.getConnection(url, user, password);
             stmt = (Statement) con.createStatement();
             ResultSet rs = stmt.executeQuery(query);
-            while (rs.next()){
+            while (rs.next()) {
                 id = rs.getInt(1);
             }
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
-        }
-        finally {
+        } finally {
             try {
                 con.close();
             } catch (SQLException e) {
@@ -62,7 +62,7 @@ class Dictionary {
         return id;
     }
 
-    void writeDictionaryToFile(String s){
+    void writeDictionaryToFile(String s) {
         new Helper().writeToFile(s);
     }
 
@@ -77,11 +77,12 @@ class Dictionary {
                 words.add(new Word(rs.getString(2), rs.getString(3), rs.getString(4)));
             }
         } catch (SQLException sqlEx) {
-            sqlEx.printStackTrace();
-        }
-        finally {
+            System.out.println("Не могу подключится к MySQL серверу");
+        } finally {
             try {
-                con.close();
+                if (con != null) {
+                    con.close();
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
