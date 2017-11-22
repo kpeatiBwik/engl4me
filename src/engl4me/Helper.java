@@ -1,14 +1,14 @@
 package engl4me;
 
-import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 
 class Helper {
     void writeToFile(String s) {
         try {
-            byte x[] = s.getBytes();
-            FileOutputStream fileOutputStream = new FileOutputStream("dbbackup.csv");
-            fileOutputStream.write(x);
+            Writer fileOutputStream = new FileWriter("dbbackup.csv");
+            fileOutputStream.write(s);
         } catch (IOException e) {
             e.printStackTrace();
         }
